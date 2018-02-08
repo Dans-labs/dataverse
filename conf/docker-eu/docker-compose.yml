@@ -6,6 +6,8 @@ services:
         container_name: db
         ports:
         - "5435:5432"
+        volumes:
+        - ./data/db:/var/lib/db
 
     solr:
         build: solr/
@@ -14,6 +16,8 @@ services:
         - "8985:8983"
         environment:
           - "SOLR_HOST=solr"
+        volumes:
+        - ./data/solr:/var/lib/solr
 
     dataverse:
         build: dataverse/
@@ -23,7 +27,7 @@ services:
         - "8085:8080"
         environment:
           - "HOST_DNS_ADDRESS=0.0.0.0"
-	  - "LANG=en"
+          - "LANG=en"
           - "GLASSFISH_DIRECTORY=/opt/glassfish4"
           - "ADMIN_EMAIL=vty@iisg.nl"
           - "MAIL_SERVER=mail.hmdc.harvard.edu"
@@ -50,6 +54,8 @@ services:
         - "8089:8080"
         environment:
           - "HOST_DNS_ADDRESS=0.0.0.0"
+          - "LANG=ua"
+          - "BUNDLEPROPERTIES=Bundle_ua.properties_utf"
           - "GLASSFISH_DIRECTORY=/opt/glassfish4"
           - "ADMIN_EMAIL=vty@iisg.nl"
           - "MAIL_SERVER=mail.hmdc.harvard.edu"
@@ -76,6 +82,8 @@ services:
         - "8086:8080"
         environment:
           - "HOST_DNS_ADDRESS=0.0.0.0"
+          - "LANG=de"
+          - "BUNDLEPROPERTIES=Bundle_de.properties"
           - "GLASSFISH_DIRECTORY=/opt/glassfish4"
           - "ADMIN_EMAIL=vty@iisg.nl"
           - "MAIL_SERVER=mail.hmdc.harvard.edu"
@@ -102,6 +110,8 @@ services:
         - "8088:8080"
         environment:
           - "HOST_DNS_ADDRESS=0.0.0.0"
+          - "LANG=fr"
+          - "BUNDLEPROPERTIES=Bundle_fr.properties"
           - "GLASSFISH_DIRECTORY=/opt/glassfish4"
           - "ADMIN_EMAIL=vty@iisg.nl"
           - "MAIL_SERVER=mail.hmdc.harvard.edu"
@@ -123,3 +133,6 @@ services:
 networks:
   dvn:
     driver: bridge
+#volumes:
+#  - dbstorage:"/data/db"
+#  - solrstorage:"/data/solr"
