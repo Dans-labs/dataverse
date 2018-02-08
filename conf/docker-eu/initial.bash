@@ -1,6 +1,9 @@
 #!/bin/bash
 
-docker create volume dbstorage
+mkdir data
+mkdir data/db
+mkdir data/solr
+#docker-compose build postgres
 docker-compose start postgres
-docker create volume solrstorage
+#docker-compose build solr
 docker-compose start solr
