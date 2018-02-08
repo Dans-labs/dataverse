@@ -16,7 +16,6 @@ if [ ! -e $wdir/dv/deps/glassfish4dv.tgz ]; then
 	unzip glassfish-4.1.zip
 	rm glassfish4/glassfish/modules/weld-osgi-bundle.jar
 	mv weld-osgi-bundle-2.2.10.Final-glassfish4.jar glassfish4/glassfish/modules
-	tar zcf $wdir/dv/deps/glassfish4dv.tgz glassfish4
 	# assuming that folks usually have /tmp auto-clean as needed
 fi
 

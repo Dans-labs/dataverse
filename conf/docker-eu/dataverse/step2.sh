@@ -13,6 +13,7 @@ cp ../../jhove/jhove.conf testdata/
 
 # not using dvinstall.zip for setupIT.bash; but still used in install.bash for normal ops
 wdir=`pwd`
+wdir=$wdir"/dataverse"
 echo $wdir
 cd $wdir
 if [ ! -e $wdir/dv/deps/dvinstall.zip ]; then
