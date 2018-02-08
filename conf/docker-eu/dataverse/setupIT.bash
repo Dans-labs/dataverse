@@ -24,5 +24,6 @@ ls -la
 #./post # modified from phoenix
 echo "Applying language properties..."
 /usr/local/glassfish4/glassfish/bin/asadmin stop-domain
+sleep 10s
 cp -rf /opt/dv/$BUNDLEPROPERTIES /opt/glassfish4/glassfish/domains/domain1/applications/dataverse/WEB-INF/classes/Bundle.properties
 /usr/local/glassfish4/glassfish/bin/asadmin start-domain
