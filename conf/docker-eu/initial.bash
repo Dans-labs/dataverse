@@ -8,6 +8,8 @@ fi
 cd dataverse
 ./step1.sh
 ./step2.sh
+cd ../postgres
+ln -s ../dataverse/dv/deps/dvinstall.zip ./dvinstall.zip
 
 #docker-compose build postgres
 docker-compose start postgres
