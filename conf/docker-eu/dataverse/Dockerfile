@@ -9,6 +9,8 @@ WORKDIR /opt/dv
 COPY dv /opt/dv
 
 COPY testdata/schema.xml /top/dv
+COPY glassfish.bash /opt/dv/deps
+RUN /opt/dv/deps/glassfish.bash
 #RUN cd /opt ; tar zxf /opt/dv/deps/glassfish4dv.tgz
 
 # copy configuration related files
