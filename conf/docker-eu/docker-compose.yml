@@ -111,7 +111,7 @@ services:
         environment:
           - "HOST_DNS_ADDRESS=0.0.0.0"
           - "LANG=fr"
-          - "BUNDLEPROPERTIES=Bundle_fr.properties"
+          - "BUNDLEPROPERTIES=Bundle_fr.properties_utf"
           - "GLASSFISH_DIRECTORY=/opt/glassfish4"
           - "ADMIN_EMAIL=vty@iisg.nl"
           - "MAIL_SERVER=mail.hmdc.harvard.edu"
