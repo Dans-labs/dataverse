@@ -1,6 +1,6 @@
 DataverseEU Docker image
 ===============
-# Install docker compose
+# Install docker compose suitable for your OS
 https://docs.docker.com/compose/install/
  
 git clone https://github.com/Dans-labs/dataverse
@@ -9,8 +9,8 @@ git checkout 4.8.5-compose
 
 cd dataverse/conf/docker-eu
  
-# download all software
-./ initial.bash
+# download all software required for Dataverse installation (PostgreSQL, SOLR, Glassfish, Dataverse)
+./initial.bash
 # build all containers
 ./docker-compose build
 # Run images
