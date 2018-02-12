@@ -9,7 +9,7 @@ cd dataverse
 ./step1.sh
 ./step2.sh
 
-if [ ! -e postgresql/dvinstall.zip ]; then
+if [ ! -e ./postgresql/dvinstall.zip ]; then
 	cp -R ./dataverse/dv/deps/dvinstall.zip ./postgresql/dvinstall.zip
 fi
 
