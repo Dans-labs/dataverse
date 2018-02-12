@@ -5,6 +5,8 @@ https://docs.docker.com/compose/install/
  
 git clone https://github.com/Dans-labs/dataverse
 
+cd ./dataverse
+
 git checkout 4.8.5-compose
 
 cd dataverse/conf/docker-eu
