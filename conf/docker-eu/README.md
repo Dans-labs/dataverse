@@ -19,5 +19,7 @@ docker-compose build
 docker-compose up
 # Check if Dataverse is running
 docker ps
+# If you want to run specific version of Dataverse, run containers separately, for example, for French
+docker-compose up dataverse_fr
  
 After 15 minutes or so you’ll get localized Dataverses running on localhost:8085, localhost:8086 etc (see specification in .yaml file)
