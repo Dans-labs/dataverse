@@ -9,7 +9,7 @@ cd ./dataverse
 
 git checkout 4.8.5-compose
 
-cd dataverse/conf/docker-eu
+cd ./conf/docker-eu
  
 # download all software required for Dataverse installation (PostgreSQL, SOLR, Glassfish, Dataverse)
 ./initial.bash
