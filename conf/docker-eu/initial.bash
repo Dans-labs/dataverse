@@ -4,6 +4,7 @@ if [ ! -e data ]; then
 	mkdir data
 	mkdir data/db
 	mkdir data/solr
+	mkdir data/dataverse
 fi
 cd dataverse
 ./step1.sh

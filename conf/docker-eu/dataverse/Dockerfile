@@ -36,4 +36,6 @@ COPY lang.properties /opt/dv
 #RUN bash setupIT.bash
 #RUN bash install.bash 
 RUN echo "Installing and running Dataverse..."
-CMD ["/opt/dv/entrypoint.bash"]
+VOLUME /usr/local/glassfish4/glassfish/domains/domain1/files
+#VOLUME /opt/dv/lang.properties
+CMD ["/opt/dv/`"]
