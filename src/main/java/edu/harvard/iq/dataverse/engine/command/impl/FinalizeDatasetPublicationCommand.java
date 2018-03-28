@@ -20,6 +20,12 @@ import edu.harvard.iq.dataverse.engine.command.exception.CommandException;
 import edu.harvard.iq.dataverse.engine.command.exception.IllegalCommandException;
 import edu.harvard.iq.dataverse.export.ExportException;
 import edu.harvard.iq.dataverse.export.ExportService;
+import edu.harvard.iq.dataverse.pidprovider.DatasetWrapper;
+import edu.harvard.iq.dataverse.pidprovider.PIDService;
+import edu.harvard.iq.dataverse.pidprovider.contract.IPIDProvider;
+import edu.harvard.iq.dataverse.pidprovider.contract.InsufficientMetadataException;
+import edu.harvard.iq.dataverse.pidprovider.contract.PIDInUseException;
+import edu.harvard.iq.dataverse.pidprovider.contract.PIDProviderException;
 import edu.harvard.iq.dataverse.privateurl.PrivateUrl;
 import edu.harvard.iq.dataverse.settings.SettingsServiceBean;
 import edu.harvard.iq.dataverse.util.BundleUtil;
@@ -27,6 +33,7 @@ import edu.harvard.iq.dataverse.workflow.WorkflowContext.TriggerType;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,7 +50,7 @@ public class FinalizeDatasetPublicationCommand extends AbstractPublishDatasetCom
     private static final int FOOLPROOF_RETRIAL_ATTEMPTS_LIMIT = 2 ^ 8;
     
     String doiProvider;
-    
+
     public FinalizeDatasetPublicationCommand(Dataset aDataset, String aDoiProvider, DataverseRequest aRequest) {
         super(aDataset, aRequest);
         theDataset = aDataset;
@@ -52,7 +59,7 @@ public class FinalizeDatasetPublicationCommand extends AbstractPublishDatasetCom
 
     @Override
     public Dataset execute(CommandContext ctxt) throws CommandException {
-        registerExternalIdentifier(theDataset, ctxt);        
+//        registerExternalIdentifier(theDataset, ctxt);
 
         if (theDataset.getPublicationDate() == null) {
             theDataset.setReleaseUser((AuthenticatedUser) getUser());
@@ -167,12 +174,35 @@ public class FinalizeDatasetPublicationCommand extends AbstractPublishDatasetCom
 
     private void publicizeExternalIdentifier(Dataset dataset, CommandContext ctxt) throws CommandException {
         String protocol = theDataset.getProtocol();
-        IdServiceBean idServiceBean = IdServiceBean.getBean(protocol, ctxt);
-        if (idServiceBean!= null )
+        IPIDProvider pidProvider = null;
         try {
-            idServiceBean.publicizeIdentifier(dataset);
-        } catch (Throwable e) {
-            throw new CommandException(BundleUtil.getStringFromBundle("dataset.publish.error", idServiceBean.getProviderInformation()),this); 
+            pidProvider = PIDService.getProvider(protocol, ctxt);
+        } catch (Exception ex) {
+            throw new CommandException(ex.getMessage(), this);
+        }
+        try {
+            String version = dataset.getEditVersion().getSemanticVersion();
+            Optional<String> pid = pidProvider.onPublish(new DatasetWrapper(dataset), version);
+            if(dataset.getPublicationDate()==null){
+                if(pid.isPresent()){
+                    if(!pid.get().equals(dataset.getIdentifier())){
+                        dataset.setIdentifier(pid.get());
+                    }
+                }
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(FinalizeDatasetPublicationCommand.class.getName()).log(Level.SEVERE, "Error on network.", ex);
+            throw new CommandException("Error on Network. DOI registration failed. " + ex.getMessage(), this);
+        } catch (InsufficientMetadataException ex) {
+            Logger.getLogger(FinalizeDatasetPublicationCommand.class.getName()).log(Level.SEVERE, "Insufficient metadata for DOI registration.", ex);
+            throw new CommandException("Insufficient metadata for DOI registration. " + ex.getMessage(), this);
+        } catch (PIDProviderException ex) {
+            Logger.getLogger(FinalizeDatasetPublicationCommand.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CommandException("Error at DOI registration provider. " + ex.getMessage(), this);
+        } catch (PIDInUseException ex) {
+            Logger.getLogger(FinalizeDatasetPublicationCommand.class.getName()).log(Level.SEVERE, "DOI already taken.", ex);
+            throw new CommandException("DOI already taken. " + ex.getMessage(), this);
         }
     }
     
@@ -280,41 +310,40 @@ public class FinalizeDatasetPublicationCommand extends AbstractPublishDatasetCom
      * by another entity sharing the same authority...)
      * @param theDataset
      * @param ctxt
-     * @param doiProvider
-     * @throws CommandException 
+     * @throws CommandException
      */
-    private void registerExternalIdentifier(Dataset theDataset, CommandContext ctxt) throws CommandException {
-        IdServiceBean idServiceBean = IdServiceBean.getBean(theDataset.getProtocol(), ctxt);
-        if (theDataset.getGlobalIdCreateTime() == null) {
-          if (idServiceBean!=null) {
-            try {
-              if (!idServiceBean.alreadyExists(theDataset)) {
-                idServiceBean.createIdentifier(theDataset);
-                theDataset.setGlobalIdCreateTime(new Timestamp(new Date().getTime()));
-              } else {
-                int attempts = 0;
-
-                while (idServiceBean.alreadyExists(theDataset) && attempts < FOOLPROOF_RETRIAL_ATTEMPTS_LIMIT) {
-                  theDataset.setIdentifier(ctxt.datasets().generateDatasetIdentifier(theDataset, idServiceBean));
-                  attempts++;
-                }
-
-                if (idServiceBean.alreadyExists(theDataset)) {
-                  throw new IllegalCommandException("This dataset may not be published because its identifier is already in use by another dataset;gave up after " + attempts + " attempts. Current (last requested) identifier: " + theDataset.getIdentifier(), this);
-                }
-                idServiceBean.createIdentifier(theDataset);
-                theDataset.setGlobalIdCreateTime(new Timestamp(new Date().getTime()));
-
-              }
-
-            } catch (Throwable e) {
-              throw new CommandException(BundleUtil.getStringFromBundle("dataset.publish.error", idServiceBean.getProviderInformation()),this); 
-            }
-          } else {
-            throw new IllegalCommandException("This dataset may not be published because its id registry service is not supported.", this);
-          }
-          
-        }
-    }
+//    private void registerExternalIdentifier(Dataset theDataset, CommandContext ctxt) throws CommandException {
+//        IdServiceBean idServiceBean = IdServiceBean.getBean(theDataset.getProtocol(), ctxt);
+//        if (theDataset.getGlobalIdCreateTime() == null) {
+//          if (idServiceBean!=null) {
+//            try {
+//              if (!idServiceBean.alreadyExists(theDataset)) {
+//                idServiceBean.createIdentifier(theDataset);
+//                theDataset.setGlobalIdCreateTime(new Timestamp(new Date().getTime()));
+//              } else {
+//                int attempts = 0;
+//
+//                while (idServiceBean.alreadyExists(theDataset) && attempts < FOOLPROOF_RETRIAL_ATTEMPTS_LIMIT) {
+//                  theDataset.setIdentifier(ctxt.datasets().generateDatasetIdentifier(theDataset, idServiceBean));
+//                  attempts++;
+//                }
+//
+//                if (idServiceBean.alreadyExists(theDataset)) {
+//                  throw new IllegalCommandException("This dataset may not be published because its identifier is already in use by another dataset;gave up after " + attempts + " attempts. Current (last requested) identifier: " + theDataset.getIdentifier(), this);
+//                }
+//                idServiceBean.createIdentifier(theDataset);
+//                theDataset.setGlobalIdCreateTime(new Timestamp(new Date().getTime()));
+//
+//              }
+//
+//            } catch (Throwable e) {
+//              throw new CommandException(BundleUtil.getStringFromBundle("dataset.publish.error", idServiceBean.getProviderInformation()),this);
+//            }
+//          } else {
+//            throw new IllegalCommandException("This dataset may not be published because its id registry service is not supported.", this);
+//          }
+//
+//        }
+//    }
 
 }

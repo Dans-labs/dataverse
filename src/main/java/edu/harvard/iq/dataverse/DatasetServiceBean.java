@@ -7,6 +7,9 @@ import edu.harvard.iq.dataverse.authorization.users.User;
 import edu.harvard.iq.dataverse.dataaccess.ImageThumbConverter;
 import edu.harvard.iq.dataverse.dataset.DatasetUtil;
 import edu.harvard.iq.dataverse.harvest.server.OAIRecordServiceBean;
+import edu.harvard.iq.dataverse.pidprovider.contract.IPIDProvider;
+import edu.harvard.iq.dataverse.pidprovider.contract.NotSupportedException;
+import edu.harvard.iq.dataverse.pidprovider.contract.PIDProviderException;
 import edu.harvard.iq.dataverse.search.IndexServiceBean;
 import edu.harvard.iq.dataverse.settings.SettingsServiceBean;
 import edu.harvard.iq.dataverse.workflows.WorkflowComment;
@@ -219,19 +222,95 @@ public class DatasetServiceBean implements java.io.Serializable {
         return foundDataset;
     }
 
-    public String generateDatasetIdentifier(Dataset dataset, IdServiceBean idServiceBean) {
+//    public String generateDatasetIdentifier(Dataset dataset, IdServiceBean idServiceBean) {
+//        String doiIdentifierType = settingsService.getValueForKey(SettingsServiceBean.Key.IdentifierGenerationStyle, "randomString");
+//        switch (doiIdentifierType) {
+//            case "randomString":
+//                return generateIdentifierAsRandomString(dataset, idServiceBean);
+//            case "sequentialNumber":
+//                return generateIdentifierAsSequentialNumber(dataset, idServiceBean);
+//            default:
+//                /* Should we throw an exception instead?? -- L.A. 4.6.2 */
+//                return generateIdentifierAsRandomString(dataset, idServiceBean);
+//        }
+//    }
+
+    public String generateDatasetIdentifier(Dataset dataset, IPIDProvider pidProvider) {
         String doiIdentifierType = settingsService.getValueForKey(SettingsServiceBean.Key.IdentifierGenerationStyle, "randomString");
         switch (doiIdentifierType) {
             case "randomString":
-                return generateIdentifierAsRandomString(dataset, idServiceBean);
+                return generateIdentifierAsRandomString(dataset, pidProvider);
             case "sequentialNumber":
-                return generateIdentifierAsSequentialNumber(dataset, idServiceBean);
+                return generateIdentifierAsSequentialNumber(dataset, pidProvider);
             default:
                 /* Should we throw an exception instead?? -- L.A. 4.6.2 */
-                return generateIdentifierAsRandomString(dataset, idServiceBean);
+                return generateIdentifierAsRandomString(dataset, pidProvider);
         }
     }
-    
+
+    private String generateIdentifierAsSequentialNumber(Dataset dataset, IPIDProvider pidProvider) {
+
+        String identifier;
+        do {
+            StoredProcedureQuery query = this.em.createNamedStoredProcedureQuery("Dataset.generateIdentifierAsSequentialNumber");
+            query.execute();
+            Integer identifierNumeric = (Integer) query.getOutputParameterValue(1);
+            // some diagnostics here maybe - is it possible to determine that it's failing
+            // because the stored procedure hasn't been created in the database?
+            if (identifierNumeric == null) {
+                return null;
+            }
+            identifier = identifierNumeric.toString();
+        } while (!isIdentifierUniqueInDatabase(identifier, dataset, pidProvider));
+
+        return identifier;
+    }
+
+    private String generateIdentifierAsRandomString(Dataset dataset, IPIDProvider pidProvider) {
+
+        String identifier = null;
+        do {
+            identifier = RandomStringUtils.randomAlphanumeric(6).toUpperCase();
+        } while (!isIdentifierUniqueInDatabase(identifier, dataset, pidProvider));
+
+        return identifier;
+    }
+
+    /**
+     * Check that a identifier entered by the user is unique (not currently used
+     * for any other study in this Dataverse Network) alos check for duplicate
+     * in EZID if needed
+     * @param userIdentifier
+     * @param dataset
+     * @param pidProvider
+     * @return   */
+    public boolean isIdentifierUniqueInDatabase(String userIdentifier, Dataset dataset, IPIDProvider pidProvider) {
+        String query = "SELECT d FROM Dataset d WHERE d.identifier = '" + userIdentifier + "'";
+        query += " and d.protocol ='" + dataset.getProtocol() + "'";
+        query += " and d.authority = '" + dataset.getAuthority() + "'";
+        boolean u = em.createQuery(query).getResultList().isEmpty();
+
+        try{
+            String doi = dataset.getAuthority()+dataset.getDoiSeparator()+userIdentifier;
+            logger.log(Level.SEVERE,doi);
+            logger.log(Level.SEVERE,pidProvider.toString());
+            if (pidProvider.pidExists(doi)) {
+                u = false;
+            }
+        } catch (NotSupportedException ex) {
+            // Consume
+        } catch (IOException ex) {
+            Logger.getLogger(DatasetServiceBean.class.getName()).log(Level.SEVERE, "Error on network when looking up candidate for identifier.", ex);
+            throw new RuntimeException("Error on network when looking up candidate for identifier.");
+        } catch (PIDProviderException ex) {
+            Logger.getLogger(DatasetServiceBean.class.getName()).log(Level.SEVERE, "Error at DOI registration provider when looking up candidate for identifier.", ex);
+            throw new RuntimeException("Error at DOI registration provider when looking up candidate for identifier.");
+        }
+
+
+        return u;
+    }
+
     private String generateIdentifierAsRandomString(Dataset dataset, IdServiceBean idServiceBean) {
 
         String identifier = null;
