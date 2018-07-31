@@ -1,6 +1,7 @@
 #metadataBlock	name	dataverseAlias	displayName												
 	citation		Citation Metadata												
 #datasetField	name	title	description	watermark	 fieldType	displayOrder	displayFormat	advancedSearchField	allowControlledVocabulary	allowmultiples	facetable	displayoncreate	required	parent	metadatablock_id
+	metadatalanguage	Metadata Language	Select the language that will be used in the metadata.		text	0		FALSE	TRUE	FALSE	FALSE	TRUE	TRUE		citation
 	title	Title	Full title by which the Dataset is known.	Enter title...	text	0		TRUE	FALSE	FALSE	FALSE	TRUE	TRUE		citation
 	subtitle	Subtitle	A secondary title used to amplify or state certain limitations on the main title.		text	1		FALSE	FALSE	FALSE	FALSE	FALSE	FALSE		citation
 	alternativeTitle	Alternative Title	A title by which the work is commonly referred, or an abbreviation of the title.		text	2		FALSE	FALSE	FALSE	FALSE	FALSE	FALSE		citation
@@ -24,24 +25,24 @@
 	keyword	Keyword	Key terms that describe important aspects of the Dataset.		none	20		FALSE	FALSE	TRUE	FALSE	TRUE	FALSE		citation
 	keywordValue	Term	Key terms that describe important aspects of the Dataset. Can be used for building keyword indexes and for classification and retrieval purposes. A controlled vocabulary can be employed. The vocab attribute is provided for specification of the controlled vocabulary in use, such as LCSH, MeSH, or others. The vocabURI attribute specifies the location for the full controlled vocabulary.		text	21	#VALUE	TRUE	FALSE	FALSE	TRUE	TRUE	FALSE	keyword	citation
 	keywordVocabulary	Vocabulary	For the specification of the keyword controlled vocabulary in use, such as LCSH, MeSH, or others.		text	22	(#VALUE)	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	keyword	citation
-	keywordVocabularyURI	Vocabulary URL	Keyword vocabulary URL points to the web presence that describes the keyword vocabulary, if appropriate. Enter an absolute URL where the keyword vocabulary web site is found, such as http://www.my.org.	Enter full URL, starting with http://	url	23	<a href="#VALUE">#VALUE</a>	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	keyword	citation
+	keywordVocabularyURI	Vocabulary URL	Keyword vocabulary URL points to the web presence that describes the keyword vocabulary, if appropriate. Enter an absolute URL where the keyword vocabulary web site is found, such as http://www.my.org.	Enter full URL, starting with http://	url	23	"<a href=""#VALUE"">#VALUE</a>"	FALSE	FALSE	FALSE	FALSE	TRUE	FALSE	keyword	citation
 	topicClassification	Topic Classification	The classification field indicates the broad important topic(s) and subjects that the data cover. Library of Congress subject terms may be used here.  		none	24		FALSE	FALSE	TRUE	FALSE	FALSE	FALSE		citation
 	topicClassValue	Term	Topic or Subject term that is relevant to this Dataset.		text	25	#VALUE	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	topicClassification	citation
 	topicClassVocab	Vocabulary	Provided for specification of the controlled vocabulary in use, e.g., LCSH, MeSH, etc.		text	26	(#VALUE)	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	topicClassification	citation
-	topicClassVocabURI	Vocabulary URL	Specifies the URL location for the full controlled vocabulary.	Enter full URL, starting with http://	url	27	<a href="#VALUE">#VALUE</a>	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	topicClassification	citation
+	topicClassVocabURI	Vocabulary URL	Specifies the URL location for the full controlled vocabulary.	Enter full URL, starting with http://	url	27	"<a href=""#VALUE"">#VALUE</a>"	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	topicClassification	citation
 	publication	Related Publication	Publications that use the data from this Dataset.		none	28		FALSE	FALSE	TRUE	FALSE	TRUE	FALSE		citation
 	publicationCitation	Citation	The full bibliographic citation for this related publication.		textbox	29	#VALUE	TRUE	FALSE	FALSE	FALSE	TRUE	FALSE	publication	citation
 	publicationIDType	ID Type	The type of digital identifier used for this publication (e.g., Digital Object Identifier (DOI)).		text	30	#VALUE: 	TRUE	TRUE	FALSE	FALSE	TRUE	FALSE	publication	citation
 	publicationIDNumber	ID Number	The identifier for the selected ID type.		text	31	#VALUE	TRUE	FALSE	FALSE	FALSE	TRUE	FALSE	publication	citation
-	publicationURL	URL	Link to the publication web page (e.g., journal article page, archive record page, or other).	Enter full URL, starting with http://	url	32	<a href="#VALUE">#VALUE</a>	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	publication	citation
+	publicationURL	URL	Link to the publication web page (e.g., journal article page, archive record page, or other).	Enter full URL, starting with http://	url	32	"<a href=""#VALUE"">#VALUE</a>"	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	publication	citation
 	notesText	Notes	Additional important information about the Dataset.		textbox	33		FALSE	FALSE	FALSE	FALSE	TRUE	FALSE		citation
 	language	Language	Language of the Dataset		text	34		TRUE	TRUE	TRUE	TRUE	FALSE	FALSE		citation
 	producer	Producer	Person or organization with the financial or administrative responsibility over this Dataset		none	35		FALSE	FALSE	TRUE	FALSE	FALSE	FALSE		citation
 	producerName	Name	Producer name	FamilyName, GivenName or Organization	text	36	#VALUE	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	producer	citation
 	producerAffiliation	Affiliation	The organization with which the producer is affiliated.		text	37	(#VALUE)	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	producer	citation
 	producerAbbreviation	Abbreviation	The abbreviation by which the producer is commonly known. (ex. IQSS, ICPSR)		text	38	(#VALUE)	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	producer	citation
-	producerURL	URL	Producer URL points to the producer's web presence, if appropriate. Enter an absolute URL where the producer's web site is found, such as http://www.my.org.  	Enter full URL, starting with http://	url	39	<a href="#VALUE">#VALUE</a>	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	producer	citation
-	producerLogoURL	Logo URL	URL for the producer's logo, which points to this  producer's web-accessible logo image. Enter an absolute URL where the producer's logo image is found, such as http://www.my.org/images/logo.gif.	Enter full URL for image, starting with http://	url	40	<img src="#VALUE" alt="#NAME" class="metadata-logo"/><br/>	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	producer	citation
+	producerURL	URL	Producer URL points to the producer's web presence, if appropriate. Enter an absolute URL where the producer's web site is found, such as http://www.my.org.  	Enter full URL, starting with http://	url	39	"<a href=""#VALUE"">#VALUE</a>"	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	producer	citation
+	producerLogoURL	Logo URL	URL for the producer's logo, which points to this  producer's web-accessible logo image. Enter an absolute URL where the producer's logo image is found, such as http://www.my.org/images/logo.gif.	Enter full URL for image, starting with http://	url	40	"<img src=""#VALUE"" alt=""#NAME"" class=""metadata-logo""/><br/>"	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	producer	citation
 	productionDate	Production Date	Date when the data collection or other materials were produced (not distributed, published or archived).	YYYY-MM-DD	date	41		TRUE	FALSE	FALSE	TRUE	FALSE	FALSE		citation
 	productionPlace	Production Place	The location where the data collection and any other related materials were produced.		text	42		FALSE	FALSE	FALSE	FALSE	FALSE	FALSE		citation
 	contributor	Contributor	The organization or person responsible for either collecting, managing, or otherwise contributing in some form to the development of the resource.		none	43	:	FALSE	FALSE	TRUE	FALSE	FALSE	FALSE		citation
@@ -54,8 +55,8 @@
 	distributorName	Name	Distributor name	FamilyName, GivenName or Organization	text	50	#VALUE	TRUE	FALSE	FALSE	TRUE	FALSE	FALSE	distributor	citation
 	distributorAffiliation	Affiliation	The organization with which the distributor contact is affiliated.		text	51	(#VALUE)	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	distributor	citation
 	distributorAbbreviation	Abbreviation	The abbreviation by which this distributor is commonly known (e.g., IQSS, ICPSR).		text	52	(#VALUE)	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	distributor	citation
-	distributorURL	URL	Distributor URL points to the distributor's web presence, if appropriate. Enter an absolute URL where the distributor's web site is found, such as http://www.my.org.	Enter full URL, starting with http://	url	53	<a href="#VALUE">#VALUE</a>	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	distributor	citation
-	distributorLogoURL	Logo URL	URL of the distributor's logo, which points to this  distributor's web-accessible logo image. Enter an absolute URL where the distributor's logo image is found, such as http://www.my.org/images/logo.gif.	Enter full URL for image, starting with http://	url	54	<img src="#VALUE" alt="#NAME" class="metadata-logo"/><br/>	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	distributor	citation
+	distributorURL	URL	Distributor URL points to the distributor's web presence, if appropriate. Enter an absolute URL where the distributor's web site is found, such as http://www.my.org.	Enter full URL, starting with http://	url	53	"<a href=""#VALUE"">#VALUE</a>"	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	distributor	citation
+	distributorLogoURL	Logo URL	URL of the distributor's logo, which points to this  distributor's web-accessible logo image. Enter an absolute URL where the distributor's logo image is found, such as http://www.my.org/images/logo.gif.	Enter full URL for image, starting with http://	url	54	"<img src=""#VALUE"" alt=""#NAME"" class=""metadata-logo""/><br/>"	FALSE	FALSE	FALSE	FALSE	FALSE	FALSE	distributor	citation
 	distributionDate	Distribution Date	Date that the work was made available for distribution/presentation.	YYYY-MM-DD	date	55		TRUE	FALSE	FALSE	TRUE	FALSE	FALSE		citation
 	depositor	Depositor	The person (Family Name, Given Name) or the name of the organization that deposited this Dataset to the repository.		text	56		FALSE	FALSE	FALSE	FALSE	FALSE	FALSE		citation
 	dateOfDeposit	Deposit Date	Date that the Dataset was deposited into the repository.	YYYY-MM-DD	date	57		FALSE	FALSE	FALSE	TRUE	FALSE	FALSE		citation
@@ -84,12 +85,12 @@
 	subject	Arts and Humanities	D0	1											
 	subject	Astronomy and Astrophysics	D1	2											
 	subject	Business and Management	D2	3											
-	subject	Chemistry	D3	4
-	subject	Computer and Information Science	D7	5									
+	subject	Chemistry	D3	4											
+	subject	Computer and Information Science	D7	5											
 	subject	Earth and Environmental Sciences	D4	6											
-	subject	Engineering	D5	7
-	subject	Law	D8	8	
-	subject	Mathematical Sciences	D9	9																	
+	subject	Engineering	D5	7											
+	subject	Law	D8	8											
+	subject	Mathematical Sciences	D9	9											
 	subject	Medicine, Health and Life Sciences	D6	10											
 	subject	Physics	D10	11											
 	subject	Social Sciences	D11	12											
@@ -316,3 +317,184 @@
 	language	Zhuang, Chuang		182											
 	language	Zulu		183											
 	language	Not applicable		184											
+	metadatalanguage	Abkhazian		0											
+	metadatalanguage	Afar		1											
+	metadatalanguage	Afrikaans		2											
+	metadatalanguage	Akan		3											
+	metadatalanguage	Albanian		4											
+	metadatalanguage	Amharic		5											
+	metadatalanguage	Arabic		6											
+	metadatalanguage	Aragonese		7											
+	metadatalanguage	Armenian		8											
+	metadatalanguage	Assamese		9											
+	metadatalanguage	Avaric		10											
+	metadatalanguage	Avestan		11											
+	metadatalanguage	Aymara		12											
+	metadatalanguage	Azerbaijani		13											
+	metadatalanguage	Bambara		14											
+	metadatalanguage	Bashkir		15											
+	metadatalanguage	Basque		16											
+	metadatalanguage	Belarusian		17											
+	metadatalanguage	Bengali		18											
+	metadatalanguage	Bihari languages		19											
+	metadatalanguage	Bislama		20											
+	metadatalanguage	Bokmål, Norwegian |  Norwegian Bokmål		21											
+	metadatalanguage	Bosnian		22											
+	metadatalanguage	Breton		23											
+	metadatalanguage	Bulgarian		24											
+	metadatalanguage	Burmese		25											
+	metadatalanguage	Catalan |  Valencian		26											
+	metadatalanguage	Central Khmer		27											
+	metadatalanguage	Chamorro		28											
+	metadatalanguage	Chechen		29											
+	metadatalanguage	Chichewa |  Chewa |  Nyanja		30											
+	metadatalanguage	Chinese		31											
+	metadatalanguage	Church Slavic |  Old Slavonic |  Church Slavonic |  Old Bulgarian |  Old Church Slavonic		32											
+	metadatalanguage	Chuvash		33											
+	metadatalanguage	Cornish		34											
+	metadatalanguage	Corsican		35											
+	metadatalanguage	Cree		36											
+	metadatalanguage	Croatian		37											
+	metadatalanguage	Czech		38											
+	metadatalanguage	Danish		39											
+	metadatalanguage	Divehi |  Dhivehi		40											
+	metadatalanguage	Dutch |  Flemish		41											
+	metadatalanguage	Dzongkha		42											
+	metadatalanguage	English		43											
+	metadatalanguage	Esperanto		44											
+	metadatalanguage	Estonian		45											
+	metadatalanguage	Ewe		46											
+	metadatalanguage	Faroese		47											
+	metadatalanguage	Fijian		48											
+	metadatalanguage	Finnish		49											
+	metadatalanguage	French		50											
+	metadatalanguage	Fulah		51											
+	metadatalanguage	Gaelic |  Scottish Gaelic		52											
+	metadatalanguage	Galician		53											
+	metadatalanguage	Ganda		54											
+	metadatalanguage	Georgian		55											
+	metadatalanguage	German		56											
+	metadatalanguage	Greek, Modern (1453-)		57											
+	metadatalanguage	Guarani		58											
+	metadatalanguage	Gujarati		59											
+	metadatalanguage	Haitian |  Haitian Creole		60											
+	metadatalanguage	Hausa		61											
+	metadatalanguage	Hebrew		62											
+	metadatalanguage	Herero		63											
+	metadatalanguage	Hindi		64											
+	metadatalanguage	Hiri Motu		65											
+	metadatalanguage	Hungarian		66											
+	metadatalanguage	Icelandic		67											
+	metadatalanguage	Ido		68											
+	metadatalanguage	Igbo		69											
+	metadatalanguage	Indonesian		70											
+	metadatalanguage	Interlingua (International Auxiliary Language Association)		71											
+	metadatalanguage	Interlingue |  Occidental		72											
+	metadatalanguage	Inuktitut		73											
+	metadatalanguage	Inupiaq		74											
+	metadatalanguage	Irish		75											
+	metadatalanguage	Italian		76											
+	metadatalanguage	Japanese		77											
+	metadatalanguage	Javanese		78											
+	metadatalanguage	Kalaallisut |  Greenlandic		79											
+	metadatalanguage	Kannada		80											
+	metadatalanguage	Kanuri		81											
+	metadatalanguage	Kashmiri		82											
+	metadatalanguage	Kazakh		83											
+	metadatalanguage	Kikuyu |  Gikuyu		84											
+	metadatalanguage	Kinyarwanda		85											
+	metadatalanguage	Kirghiz |  Kyrgyz		86											
+	metadatalanguage	Komi		87											
+	metadatalanguage	Kongo		88											
+	metadatalanguage	Korean		89											
+	metadatalanguage	Kuanyama |  Kwanyama		90											
+	metadatalanguage	Kurdish		91											
+	metadatalanguage	Lao		92											
+	metadatalanguage	Latin		93											
+	metadatalanguage	Latvian		94											
+	metadatalanguage	Limburgan |  Limburger |  Limburgish		95											
+	metadatalanguage	Lingala		96											
+	metadatalanguage	Lithuanian		97											
+	metadatalanguage	Luba-Katanga		98											
+	metadatalanguage	Luxembourgish |  Letzeburgesch		99											
+	metadatalanguage	Macedonian		100											
+	metadatalanguage	Malagasy		101											
+	metadatalanguage	Malay		102											
+	metadatalanguage	Malayalam		103											
+	metadatalanguage	Maltese		104											
+	metadatalanguage	Manx		105											
+	metadatalanguage	Maori		106											
+	metadatalanguage	Marathi		107											
+	metadatalanguage	Marshallese		108											
+	metadatalanguage	Mongolian		109											
+	metadatalanguage	Nauru		110											
+	metadatalanguage	Navajo |  Navaho		111											
+	metadatalanguage	Ndebele, North |  North Ndebele		112											
+	metadatalanguage	Ndebele, South |  South Ndebele		113											
+	metadatalanguage	Ndonga		114											
+	metadatalanguage	Nepali		115											
+	metadatalanguage	Northern Sami		116											
+	metadatalanguage	Norwegian		117											
+	metadatalanguage	Norwegian Nynorsk |  Nynorsk, Norwegian		118											
+	metadatalanguage	Occitan (post 1500)		119											
+	metadatalanguage	Ojibwa		120											
+	metadatalanguage	Oriya		121											
+	metadatalanguage	Oromo		122											
+	metadatalanguage	Ossetian |  Ossetic		123											
+	metadatalanguage	Pali		124											
+	metadatalanguage	Panjabi |  Punjabi		125											
+	metadatalanguage	Persian		126											
+	metadatalanguage	Polish		127											
+	metadatalanguage	Portuguese		128											
+	metadatalanguage	Pushto |  Pashto		129											
+	metadatalanguage	Quechua		130											
+	metadatalanguage	Romansh		131											
+	metadatalanguage	Rundi		132											
+	metadatalanguage	Russian		133											
+	metadatalanguage	Samoan		134											
+	metadatalanguage	Sango		135											
+	metadatalanguage	Sanskrit		136											
+	metadatalanguage	Serbian		137											
+	metadatalanguage	Shona		138											
+	metadatalanguage	Sichuan Yi		139											
+	metadatalanguage	Sindhi		140											
+	metadatalanguage	Sinhala |  Sinhalese		141											
+	metadatalanguage	Slovak		142											
+	metadatalanguage	Slovenian		143											
+	metadatalanguage	Somali		144											
+	metadatalanguage	Sotho, Southern		145											
+	metadatalanguage	Sundanese		146											
+	metadatalanguage	Swahili		147											
+	metadatalanguage	Swati		148											
+	metadatalanguage	Swedish		149											
+	metadatalanguage	Tagalog		150											
+	metadatalanguage	Tahitian		151											
+	metadatalanguage	Tajik		152											
+	metadatalanguage	Tamil		153											
+	metadatalanguage	Tatar		154											
+	metadatalanguage	Telugu		155											
+	metadatalanguage	Thai		156											
+	metadatalanguage	Tibetan		157											
+	metadatalanguage	Tigrinya		158											
+	metadatalanguage	Tonga (Tonga Islands)		159											
+	metadatalanguage	Tsonga		160											
+	metadatalanguage	Tswana		161											
+	metadatalanguage	Turkish		162											
+	metadatalanguage	Turkmen		163											
+	metadatalanguage	Twi		164											
+	metadatalanguage	Uighur |  Uyghur		165											
+	metadatalanguage	Ukrainian		166											
+	metadatalanguage	Urdu		167											
+	metadatalanguage	Uzbek		168											
+	metadatalanguage	Venda		169											
+	metadatalanguage	Vietnamese		170											
+	metadatalanguage	Volapük		171											
+	metadatalanguage	Walloon		172											
+	metadatalanguage	Welsh		173											
+	metadatalanguage	Western Frisian		174											
+	metadatalanguage	Wolof		175											
+	metadatalanguage	Xhosa		176											
+	metadatalanguage	Yiddish		177											
+	metadatalanguage	Yoruba		178											
+	metadatalanguage	Zhuang |  Chuang		179											
+	metadatalanguage	Zulu		180											
